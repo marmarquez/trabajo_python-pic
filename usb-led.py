@@ -12,14 +12,11 @@ os.system('clear')
 root = Tk()				
 root.title('LED ON-OFF with Python')
 root.geometry("400x280")
-root.configure(background="LightSteelBlue3")
+root.configure(background="LightSteelBlue3")		# LightSkyBlue3
 
-# text = tk.Text(root)
+# text = Text(root)
 
-# myFont = Font(family="Times New Roman", size=20)
-# text.configure(font=myFont)
-
-# LightSkyBlue3
+myFont = Font(family="Calibri", size=20)
 
 flag = 1		# auxiliar para el boton
 flag2 = 0		# auxiliar para la conexion usb
@@ -76,7 +73,7 @@ def conectar():
 	    #raise ValueError('Device not found')
 		
 		# abrir nueva ventana de dialogo
-		error = Tk()				
+		error = tk.Tk()				
 		error.title('errox01')
 		error.geometry("300x100")
 		error.configure(background="goldenrod3")
