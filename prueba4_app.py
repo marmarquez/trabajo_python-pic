@@ -40,7 +40,7 @@ def mensajeLed():
 				myButton2.config(bg='green')
 				myButton2.config(text='LED ON')
 				flag = 2
-				dev.write(1,'on')
+				dev.write(1,'ON')
 				# puerto.write(b'on')				# manda msj de encender
 				break
 
@@ -48,7 +48,7 @@ def mensajeLed():
 				myButton2.config(bg='red')
 				myButton2.config(text='LED OFF')
 				flag = 1
-				dev.write(1,'off')
+				dev.write(1,'OFF')
 				# puerto.write(b'off')		   # manda msj de apagar
 				break
 	else: # si no esta conectado
@@ -107,10 +107,10 @@ portCom.grid(padx=12,pady=12)
 
 portC = portCom.get()		# se obtiene el puerto al que se quiere conectar
 
-myButton1 = Button(root, text="Conectar",command=conectar)
-myButton1.grid(padx=12,pady=15)
+#myButton1 = Button(root, text="Conectar",command=conectar)
+#myButton1.grid(padx=12,pady=15)
 
-myLabel2 = Label(root,text="Desonectado")
+myLabel2 = Label(root,text="Desconectado")
 myLabel2.grid(padx=12,pady=20)
 
 myLabel3 = Label(root,text="Presione el boton para encender o apagar:")
