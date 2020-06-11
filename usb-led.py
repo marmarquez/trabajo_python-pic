@@ -31,19 +31,15 @@ def mensajeLed():
 	if flag2 == 1:  # si esta conectado
 		while 1==1:
 			if flag == 1:		# encender led
-				myButton2.config(bg='green')
-				myButton2.config(text='LED ON')
+				myButton2.config(bg='green',text='LED ON')
 				flag = 2
-				dev.write(1,'ON')
-				# puerto.write(b'on')				# manda msj de encender
+				dev.write(1,'ON')					# manda msj de encender			
 				break
 
 			if flag == 2:		# apagar led
-				myButton2.config(bg='red')
-				myButton2.config(text='LED OFF')
+				myButton2.config(bg='red',text='LED OFF')
 				flag = 1
-				dev.write(1,'OFF')
-				# puerto.write(b'off')		   # manda msj de apagar
+				dev.write(1,'OFF')					# manda msj de apagar		   
 				break
 	else: # si no esta conectado
 		# abrir nueva ventana de dialogo
@@ -63,10 +59,9 @@ def conectar():
 	
 	global flag2
 
-	# find our device
+	# busca dispositivo
 	dev = usb.core.find(idVendor=0x048D, idProduct=0x003F)
 
-	# was it found?
 	if dev is None:
 	    #raise ValueError('Device not found')
 		
