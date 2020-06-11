@@ -1,11 +1,10 @@
-# import tkinter as tk
 from tkinter import *
 from tkinter.font import Font
 
 import usb.core
 import usb.util
 import os
-# import sys
+
 os.system('clear')
 
 # creando ventana de GUI
@@ -14,9 +13,8 @@ root.title('LED ON-OFF with Python')
 root.geometry("400x280")
 root.configure(background="LightSteelBlue3")		# LightSkyBlue3
 
-# text = Text(root)
-
-myFont = Font(family="Calibri", size=20)
+myFont = Font(family="Calibri",size=10)
+myFont2 = Font(family="Calibri", weight="bold",size=10)
 
 flag = 1		# auxiliar para el boton
 flag2 = 0		# auxiliar para la conexion usb
@@ -73,7 +71,7 @@ def conectar():
 	    #raise ValueError('Device not found')
 		
 		# abrir nueva ventana de dialogo
-		error = tk.Tk()				
+		error = Tk()				
 		error.title('errox01')
 		error.geometry("300x100")
 		error.configure(background="goldenrod3")
@@ -94,13 +92,13 @@ def conectar():
 # ---------------------------------------------------------------------------
 # construccion de la ventana de GUI
 
-myLabel3 = Label(root,text="Presione el botón para Encender o Apagar el LED:",bg="LightSteelBlue3")
+myLabel3 = Label(root,text="Presione el botón para Encender o Apagar el LED:",bg="LightSteelBlue3",font=myFont)
 myLabel3.pack(padx=15,pady=20)
 
 myButton2 = Button(root, text="LED OFF",width=10,bg='red',command=mensajeLed)
 myButton2.pack(padx=20,pady=30)
 
-myLabel = Label(root,text="Estado de conexión:  " + status,bg="LightSteelBlue3")
+myLabel = Label(root,text="Estado de conexión:  " + status, bg="LightSteelBlue3")
 myLabel.pack(padx=10,pady=20)
 
 myButton1 = Button(root, text="Conectar",command=conectar)
