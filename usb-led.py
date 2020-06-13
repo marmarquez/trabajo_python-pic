@@ -13,8 +13,8 @@ root.title('LED ON-OFF with Python')
 root.geometry("400x280")
 root.configure(background="LightSteelBlue3")		# LightSkyBlue3
 
-myFont = Font(family="Calibri",size=10)
-myFont2 = Font(family="Calibri", weight="bold",size=10)
+myFont = Font(family="Calibri",size=12)
+# myFont2 = Font(family="Calibri", weight="bold",size=10)
 
 flag = 1		# auxiliar para el boton
 flag2 = 0		# auxiliar para la conexion usb
@@ -46,7 +46,7 @@ def mensajeLed():
 		error2 = Tk()				
 		error2.title('errox02')
 		error2.geometry("250x100")
-		error2.configure(background="goldenrod3")
+		# error2.configure(background="goldenrod3")
 
 		# por favor ingrese un puerto valido
 		myLabel5 = Label(error2,text="Debe conectarse a un puerto")
@@ -69,7 +69,7 @@ def conectar():
 		error = Tk()				
 		error.title('errox01')
 		error.geometry("300x100")
-		error.configure(background="goldenrod3")
+		# error.configure(background="goldenrod3")
 
 		# por favor ingrese un puerto valido
 		myLabel4 = Label(error,text="No se encuentra el puerto establecido")
@@ -90,13 +90,13 @@ def conectar():
 myLabel3 = Label(root,text="Presione el botón para Encender o Apagar el LED:",bg="LightSteelBlue3",font=myFont)
 myLabel3.pack(padx=15,pady=20)
 
-myButton2 = Button(root, text="LED OFF",width=10,bg='red',command=mensajeLed)
-myButton2.pack(padx=20,pady=30)
+myButton2 = Button(root, text="LED OFF",width=10,bg='red',command=mensajeLed,font=myFont)
+myButton2.pack(padx=20,pady=20)
 
-myLabel = Label(root,text="Estado de conexión:  " + status, bg="LightSteelBlue3")
+myLabel = Label(root,text="Estado de conexión:  " + status, bg="LightSteelBlue3",font=myFont)
 myLabel.pack(padx=10,pady=20)
 
-myButton1 = Button(root, text="Conectar",command=conectar)
+myButton1 = Button(root, text="Conectar",command=conectar,font=myFont,width=9)
 myButton1.pack(padx=10,pady=10)
 
 root.mainloop()
