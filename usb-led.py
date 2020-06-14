@@ -5,7 +5,7 @@ import usb.core
 import usb.util
 import os
 
-os.system('clear')
+#os.system('clear')
 
 # creando ventana de GUI
 root = Tk()				
@@ -27,6 +27,7 @@ def mensajeLed():
 
 	global flag
 	global flag2 
+	global dev
 
 	if flag2 == 1:  # si esta conectado
 		while 1==1:
@@ -57,10 +58,10 @@ def mensajeLed():
 
 def conectar():
 	
-	global flag2
+	global flag2,dev
 
 	# busca dispositivo
-	dev = usb.core.find(idVendor=0x048D, idProduct=0x003F)
+	dev = usb.core.find(idVendor=0x04D8, idProduct=0x003F)
 
 	if dev is None:
 	    #raise ValueError('Device not found')
@@ -75,11 +76,15 @@ def conectar():
 		myLabel4 = Label(error,text="No se encuentra el puerto establecido")
 		myLabel4.pack(padx=10,pady=30)
 
+		status = "Desconectado"
+
+		myLabel.config(text="Estado de conexión:  " + status)
+
 	else:
 		flag2 = 1			# conectado
 		status = "Conectado"
 
-		myLabel2.config(text="Estado de conexión:  " + status)
+		myLabel.config(text="Estado de conexión:  " + status)
 
 		# configuraciones iniciales del puerto establecido
 		dev.set_configuration()
