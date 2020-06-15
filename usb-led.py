@@ -34,13 +34,13 @@ def mensajeLed():
 			if flag == 1:		# encender led
 				myButton2.config(bg='green',text='LED ON')
 				flag = 2
-				dev.write(1,'ON')					# manda msj de encender			
+				dev.write(1,'N')					# manda msj de encender			
 				break
 
 			if flag == 2:		# apagar led
 				myButton2.config(bg='red',text='LED OFF')
 				flag = 1
-				dev.write(1,'OFF')					# manda msj de apagar		   
+				dev.write(1,'F')					# manda msj de apagar		   
 				break
 	else: # si no esta conectado
 		# abrir nueva ventana de dialogo
