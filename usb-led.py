@@ -11,23 +11,18 @@ import os
 root = Tk()				
 root.title('LED ON-OFF with Python')
 root.geometry("400x280")
-root.configure(background="LightSteelBlue3")		# LightSkyBlue3
+root.configure(background="LightSteelBlue3")		
 
 myFont = Font(family="Calibri",size=12)
-# myFont2 = Font(family="Calibri", weight="bold",size=10)
 
 flag = 1		# auxiliar para el boton
 flag2 = 0		# auxiliar para la conexion usb
-
-status = "Desconectado"
 
 # -----------------------------------------------------------------------------------
 # funcion que se ejecuta para enviar mensaje al mcu al presionar el boton2
 def mensajeLed():
 
-	global flag
-	global flag2 
-	global dev
+	global flag, flag2, dev
 
 	if flag2 == 1:  # si esta conectado
 		while 1==1:
@@ -47,7 +42,6 @@ def mensajeLed():
 		error2 = Tk()				
 		error2.title('errox02')
 		error2.geometry("250x100")
-		# error2.configure(background="goldenrod3")
 
 		# por favor ingrese un puerto valido
 		myLabel5 = Label(error2,text="Debe conectarse a un puerto")
@@ -58,7 +52,7 @@ def mensajeLed():
 
 def conectar():
 	
-	global flag2,dev
+	global flag2, dev
 
 	# busca dispositivo
 	dev = usb.core.find(idVendor=0x04D8, idProduct=0x003F)
@@ -70,21 +64,17 @@ def conectar():
 		error = Tk()				
 		error.title('errox01')
 		error.geometry("300x100")
-		# error.configure(background="goldenrod3")
 
 		# por favor ingrese un puerto valido
 		myLabel4 = Label(error,text="No se encuentra el puerto establecido")
 		myLabel4.pack(padx=10,pady=30)
 
-		status = "Desconectado"
-
-		myLabel.config(text="Estado de conexión:  " + status)
+		myLabel.config(text="Estado de conexión:  Desconectado")
 
 	else:
 		flag2 = 1			# conectado
-		status = "Conectado"
 
-		myLabel.config(text="Estado de conexión:  " + status)
+		myLabel.config(text="Estado de conexión:  Conectado" )
 
 		# configuraciones iniciales del puerto establecido
 		dev.set_configuration()
@@ -98,7 +88,7 @@ myLabel3.pack(padx=15,pady=20)
 myButton2 = Button(root, text="LED OFF",width=10,bg='red',command=mensajeLed,font=myFont)
 myButton2.pack(padx=20,pady=20)
 
-myLabel = Label(root,text="Estado de conexión:  " + status, bg="LightSteelBlue3",font=myFont)
+myLabel = Label(root,text="Estado de conexión:  Desconectado", bg="LightSteelBlue3",font=myFont)
 myLabel.pack(padx=10,pady=20)
 
 myButton1 = Button(root, text="Conectar",command=conectar,font=myFont,width=9)
