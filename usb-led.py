@@ -1,41 +1,39 @@
 from tkinter import *
 from tkinter.font import Font
-
-import usb.core
-import usb.util
+import serial
 import os
 
-#os.system('clear')
+# definiendo objeto para la comunicacion
+puerto = serial.Serial() 		
+puerto.baudrate = 9600
+puerto.timeout = 200
 
 # creando ventana de GUI
 root = Tk()				
 root.title('LED ON-OFF with Python')
-root.geometry("400x280")
+root.geometry("400x350")
 root.configure(background="LightSteelBlue3")		
 
-myFont = Font(family="Calibri",size=12)
-
 flag = 1		# auxiliar para el boton
-flag2 = 0		# auxiliar para la conexion usb
 
 # -----------------------------------------------------------------------------------
 # funcion que se ejecuta para enviar mensaje al mcu al presionar el boton2
 def mensajeLed():
 
-	global flag, flag2, dev
+	global flag, puerto
 
-	if flag2 == 1:  # si esta conectado
+	if puerto.is_open == 1:  # si esta conectado
 		while 1==1:
 			if flag == 1:		# encender led
 				myButton2.config(bg='green',text='LED ON')
 				flag = 2
-				dev.write(1,'N')					# manda msj de encender			
+				puerto.write(b'N')		   # manda msj de apagar
 				break
 
 			if flag == 2:		# apagar led
 				myButton2.config(bg='red',text='LED OFF')
 				flag = 1
-				dev.write(1,'F')					# manda msj de apagar		   
+				puerto.write(b'F')		   # manda msj de apagar	   
 				break
 	else: # si no esta conectado
 		# abrir nueva ventana de dialogo
@@ -52,46 +50,62 @@ def mensajeLed():
 
 def conectar():
 	
-	global flag2, dev
+	# si hay algo en el cuadro de texto, intento establecer conexion
+	if puerto.is_open == 0:			# si esta desconectado entro aqui
+		if portCom.get() != "":
 
-	# busca dispositivo
-	dev = usb.core.find(idVendor=0x04D8, idProduct=0x003F)
+			puerto.port = portCom.get()
 
-	if dev is None:
-	    #raise ValueError('Device not found')
-		
-		# abrir nueva ventana de dialogo
-		error = Tk()				
-		error.title('errox01')
-		error.geometry("300x100")
+			try:
+				puerto.open()
+				myLabel2.config(text='Conectado')
+			except:
+				puerto.close()		# no se logró conectar
 
-		# por favor ingrese un puerto valido
-		myLabel4 = Label(error,text="No se encuentra el puerto establecido")
-		myLabel4.pack(padx=10,pady=30)
+				# abrir nueva ventana de dialogo
+				error = Tk()				
+				error.title('errox04')
+				error.geometry("200x100")
 
-		myLabel.config(text="Estado de conexión:  Desconectado")
+				myLabel4 = Label(error,text="Error en conexión")
+				myLabel4.pack(padx=10,pady=30)
 
-	else:
-		flag2 = 1			# conectado
+		# si la entrada de texto esta vacia	
+		if portCom.get() == "":
 
-		myLabel.config(text="Estado de conexión:  Conectado" )
+			# abrir nueva ventana de dialogo
+			error = Tk()				
+			error.title('errox01')
+			error.geometry("200x100")
 
-		# configuraciones iniciales del puerto establecido
-		dev.set_configuration()
+			# por favor ingrese un puerto valido
+			myLabel4 = Label(error,text="Inserte puerto válido")
+			myLabel4.pack(padx=10,pady=30)
+	else:					# si esta conectado entro aqui
+		puerto.close()
+		myLabel2.config(text='Desconectado')
 
 # ---------------------------------------------------------------------------
 # construccion de la ventana de GUI
 
-myLabel3 = Label(root,text="Presione el botón para Encender o Apagar el LED:",bg="LightSteelBlue3",font=myFont)
+myLabel3 = Label(root,text="Presione el botón para Encender o Apagar el LED:",bg="LightSteelBlue3")
 myLabel3.pack(padx=15,pady=20)
 
-myButton2 = Button(root, text="LED OFF",width=10,bg='red',command=mensajeLed,font=myFont)
+myButton2 = Button(root, text="LED OFF",width=10,bg='red',command=mensajeLed)
 myButton2.pack(padx=20,pady=20)
 
-myLabel = Label(root,text="Estado de conexión:  Desconectado", bg="LightSteelBlue3",font=myFont)
+myLabel = Label(root,text="Inserte puerto:", bg="LightSteelBlue3")
 myLabel.pack(padx=10,pady=20)
 
-myButton1 = Button(root, text="Conectar",command=conectar,font=myFont,width=9)
+portCom = Entry(root,width=12)
+portCom.pack(padx=12,pady=15)
+
+portC = portCom.get()		# se obtiene el puerto al que se quiere conectar
+
+myLabel2 = Label(root,text="Desconectado", bg="LightSteelBlue3")
+myLabel2.pack(padx=10,pady=10)
+
+myButton1 = Button(root, text="Conectar",command=conectar,width=9)
 myButton1.pack(padx=10,pady=10)
 
 root.mainloop()
