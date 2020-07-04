@@ -5,7 +5,7 @@ import os
 
 # definiendo objeto para la comunicacion
 puerto = serial.Serial() 		
-puerto.baudrate = 9600
+puerto.baudrate = 115200
 puerto.timeout = 200
 
 # creando ventana de GUI
