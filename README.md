@@ -2,7 +2,7 @@
 Código gui - pyhton para trabajo freelance
 
 Los siguientes archivos son parte de un proyecto que consiste en comunicar desde la PC, a traves de un GUI en python, con un PIC18F2550
-por medio de conexion USB
+por medio de conexion USB. Inicialmente, esta configurado para recibir un mensaje que permita encender y apagar un led conectado en el pin RB4.
 
 Contiene:
 
