@@ -1,0 +1,54 @@
+[PROJECT]
+Target=main.hex
+Processor_Text=PIC18F2550
+CCSVerions=5.015
+Compiler=PCH
+CCSVersion=5.076
+[Target Data]
+FileList=main.c
+[Directories]
+Include=C:\Program Files (x86)\PICC\Devices\;C:\Program Files (x86)\PICC\Drivers\
+[C:\Users\DELL LATITUDE E7270\Documents\trabajo_pic18f\main]
+Type=4
+[mru-list]
+1=main.c
+[Opened Files]
+1=main.c
+2=..\..\..\..\Program Files (x86)\PICC\Drivers\pic18_usb.c
+3=
+4=..\..\..\..\Program Files (x86)\PICC\Drivers\pic18_usb.h
+5=..\..\..\..\Program Files (x86)\PICC\Devices\18F2550.h
+6=
+t1=1
+t2=1
+Count=2
+[main.c]
+Type=4
+
+[fileformats]
+forcecoff=0
+
+[ProjectLog]
+Days=2
+D1=07-07-2020
+D1_L=1
+D1_L1=[76305]Project Opened.
+D2=08-07-2020
+D2_L=7
+D2_L1=[3582]Project Closed.
+D2_L2=[48592]Project Opened.
+D2_L3=[48758]Started Editing.
+D2_L4=[54314]Stopped Editing.
+TotalEdit=88
+TotalDebug=0
+D2_E=88
+D2_D=0
+D2_L5=[55226]Project Closed.
+D2_L6=[58278]Project Opened.
+D2_L7=[58963]Project Closed.
+[Units]
+Count=1
+1=main (main)
+
+[defines]
+buildcount=1
