@@ -1,0 +1,8 @@
+Compiling C:\Users\DELL LATITUDE E7270\Documents\trabajo_pic18f\main on 08-Jul-20 at 13:37
+>>> Warning 203 "C:\Program Files (x86)\PICC\Drivers\pic18_usb.c" Line 727(1,1): Condition always TRUE
+>>> Warning 216 "main.c" Line 75(1,2): Interrupts disabled during call to prevent re-entrancy:  (usb_token_reset)
+>>> Warning 216 "main.c" Line 75(1,2): Interrupts disabled during call to prevent re-entrancy:  (usb_cdc_init)
+>>> Warning 202 "main.c" Line 37(5,8): Variable never used:   deg
+      Memory usage:   ROM=14%      RAM=24% - 25%
+      0 Errors,  4 Warnings.
+Build Successful.

@@ -1,0 +1,18 @@
+
+DESARROLLADO POR:
+
+MM,DC,IB.
+2020
+
+
+
+
+EXTRAIGA TODOS LOS ARCHIVOS DENTRO DEL ZIP EN UNA CARPETA Y SIGA LOS SIGUIENTES PASOS:
+
+1- Ejecutar "usb-led.exe"
+
+
+
+* FIRMWARE DE PIC18F2550 *
+
+1- Cargar al microcontrolador el archivo "PicUSBv02r01.hex"
