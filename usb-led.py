@@ -1,16 +1,14 @@
-from tkinter import *
+from tkinter import *				# LIBRERIA PARA GUI
 from tkinter.font import Font
-import serial
-import time
+import serial                       # LIBRERIA PARA PUERTO SERIAL
 import os
 
 import serial.tools.list_ports
 
 # definiendo objeto para la comunicacion
-puerto = serial.Serial() 		
-puerto.baudrate = 115200
-puerto.timeout = 100
-s = 'N'										# buffer receptor
+puerto = serial.Serial() 			# define el objeto puerto serial		
+puerto.baudrate = 115200			# tasa de baud 115200
+puerto.timeout = 15					# time out 15s
 
 # creando ventana de GUI
 root = Tk()				
@@ -29,13 +27,13 @@ def mensajeLed():
 	if puerto.is_open == 1:  # si esta conectado
 		while 1==1:
 			if flag == 1:		# encender led
-				myButton2.config(bg='green',text='LED ON')
+				myButton2.config(bg='green',text='LED ON')		# cambia msj de boton a ON
 				flag = 2
 				puerto.write(b'N')		   # manda msj de apagar
 				break
 
 			if flag == 2:		# apagar led
-				myButton2.config(bg='red',text='LED OFF')
+				myButton2.config(bg='red',text='LED OFF')		# cambia msj de boton a OFF
 				flag = 1
 				puerto.write(b'F')		   # manda msj de apagar	   
 				break
@@ -54,57 +52,70 @@ def mensajeLed():
 
 def conectar():
 
-	print ("ENTRO EN CONECTAR")	    # DEBUG
+	#print ("ENTRO EN CONECTAR")	    # DEBUG
 
 	if (puerto.is_open == 0):		# si el puerto esta desconectado... intenta conectar
 
-		print ("PUERTO DESCONECTADO")		# DEBUG
+		#print ("PUERTO DESCONECTADO")		# DEBUG
 
 		ports = list(serial.tools.list_ports.comports())	# lista de puertos disponibles
 
 		for p in ports:				# intenta conectar con cada puerto
 
-			print (p.device)
-			puerto.port = str(p.device)
+			puerto.port = str(p.device)			# identifica el puerto en cuestion
 
-			print(puerto)
+			#print (p.device)					# DEBUG
+			#print(puerto)						# DEBUG
 
 			if (puerto.port != ""):
-				print ("Conectando...")		   # DEBUG
-				print(puerto.is_open)		   # DEBUG
+
+				#print ("Conectando...")			# DEBUG
+				#print(puerto.is_open)			# DEBUG
 
 				try:
-					puerto.open()			   # intenta abrir puerto 
-					print(puerto.is_open)	   # DEBUG
+					puerto.open()				# abre puerto
+
+					#print(puerto.is_open)		# DEBUG
 					
 					puerto.write(b'P')		   # manda msj para conectar	
-					s = puerto.read()		   # lee el puerto
-					s1 = s.decode("utf-8")	   # convierte de byte a string
-					print(s1)				   # DEBUG
 
-					if (s1 == 'P'):					# si recibe una 'P'
-						myLabel2.config(text='Conectado')		# cambia la etiqueta del estado de conexion
-						print ("CONECTADO")					# DEBUG
-						break								# sale del ciclo for 
+					r = puerto.read()		   # lee el puerto
+					r = r.decode("utf-8")	   # cambia de byte a string
+
+					#print(r)					# DEBUG
+
+					if (r == 'P'):					# si recibe una 'P'
+						myLabel2.config(text='Conectado')		# conecto
+						myButton1.config(text='Desconectar')		# cambia msj de boton a desconectar
+
+						#print ("CONECTADO")								# DEBUG
+
+						break									# no evalua mas puertos
 					else:
-						print ("RECIBI OTRA COSA")			# DEBUG
-						puerto.close()						# cierra el puerto
-						myLabel2.config(text='Desconectado')		# cambia la etiqueta del estado de conexion
-				except:
-					print("Conexion fallo")
+						#print ("RECIBI OTRA COSA")				# DEBUG
+
+						puerto.close()							# cierro puerto
+						myLabel2.config(text='Desconectado')	# estado de conexion desconectado
+
+				except:				# si hay problemas abriendo el puerto
+
+					#print("Conexion fallo")
 					puerto.close()		# no se logró conectar
 
-					# abrir nueva ventana de dialogo
+					# abrir nueva ventana de dialogo: MENSAJE DE ERROR
 					error = Tk()				
 					error.title('errox04')
 					error.geometry("200x100")
 
 					myLabel4 = Label(error,text="Error en conexión")
 					myLabel4.pack(padx=10,pady=30)
-			#time.sleep(1)
+
 	else:							# si el puerto esta conectado... desconecta
-		puerto.close()
-		print("No se pudo conectar")
+
+		puerto.close()				# cierra puerto
+		myLabel2.config(text='Desconectado')		
+		myButton1.config(text='Conectar')
+		#print("No se pudo conectar")			# DEBUG
 
 # ---------------------------------------------------------------------------
 # construccion de la ventana de GUI
@@ -118,15 +129,10 @@ myButton2.pack(padx=20,pady=20)
 myLabel = Label(root,text="Estado de Conexión:", bg="LightSteelBlue3")
 myLabel.pack(padx=10,pady=20)
 
-# portCom = Entry(root,width=12)
-# portCom.pack(padx=12,pady=15)
-
-# portC = portCom.get()		# se obtiene el puerto al que se quiere conectar
-
 myLabel2 = Label(root,text="Desconectado", bg="LightSteelBlue3")
 myLabel2.pack(padx=10,pady=10)
 
-myButton1 = Button(root, text="Conectar",command=conectar,width=9)
+myButton1 = Button(root, text="Conectar",command=conectar,width=12)
 myButton1.pack(padx=10,pady=10)
 
 root.mainloop()
