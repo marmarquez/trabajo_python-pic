@@ -9,7 +9,7 @@ import serial.tools.list_ports
 # definiendo objeto para la comunicacion
 puerto = serial.Serial() 		
 puerto.baudrate = 115200
-puerto.timeout = 200
+puerto.timeout = 100
 s = 'N'										# buffer receptor
 
 # creando ventana de GUI
@@ -53,38 +53,43 @@ def mensajeLed():
 # funcion que se ejecuta al presionar el boton1 para conectar con el puerto
 
 def conectar():
-	
+
+	print ("ENTRO EN CONECTAR")	    # DEBUG
+
 	if (puerto.is_open == 0):		# si el puerto esta desconectado... intenta conectar
+
+		print ("PUERTO DESCONECTADO")		# DEBUG
 
 		ports = list(serial.tools.list_ports.comports())	# lista de puertos disponibles
 
-		
 		for p in ports:				# intenta conectar con cada puerto
 
 			print (p.device)
 			puerto.port = str(p.device)
 
-
 			print(puerto)
 
 			if (puerto.port != ""):
-				print ("Conectando...")
+				print ("Conectando...")		   # DEBUG
+				print(puerto.is_open)		   # DEBUG
 
-
-				print(puerto.is_open)
 				try:
-					puerto.open()
-					print(puerto.is_open)
+					puerto.open()			   # intenta abrir puerto 
+					print(puerto.is_open)	   # DEBUG
 					
 					puerto.write(b'P')		   # manda msj para conectar	
-					time.sleep(3)			   # retardo para esperar respuesta
 					s = puerto.read()		   # lee el puerto
-					if (s == 'P'):					# si recibe una 'P'
-						myLabel2.config(text='Conectado')		# conecto
-						break
+					s1 = s.decode("utf-8")	   # convierte de byte a string
+					print(s1)				   # DEBUG
+
+					if (s1 == 'P'):					# si recibe una 'P'
+						myLabel2.config(text='Conectado')		# cambia la etiqueta del estado de conexion
+						print ("CONECTADO")					# DEBUG
+						break								# sale del ciclo for 
 					else:
-						puerto.close()
-						myLabel2.config(text='Desconectado')
+						print ("RECIBI OTRA COSA")			# DEBUG
+						puerto.close()						# cierra el puerto
+						myLabel2.config(text='Desconectado')		# cambia la etiqueta del estado de conexion
 				except:
 					print("Conexion fallo")
 					puerto.close()		# no se logró conectar
