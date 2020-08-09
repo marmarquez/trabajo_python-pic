@@ -8,7 +8,7 @@ import serial.tools.list_ports
 # definiendo objeto para la comunicacion
 puerto = serial.Serial() 			# define el objeto puerto serial		
 puerto.baudrate = 115200			# tasa de baud 115200
-puerto.timeout = 15					# time out 15s
+puerto.timeout = 5					# time out 15s
 
 # creando ventana de GUI
 root = Tk()				
@@ -56,6 +56,8 @@ def conectar():
 
 	if (puerto.is_open == 0):		# si el puerto esta desconectado... intenta conectar
 
+		c = 1				# variable auxiliar para emitir mensaje de error en conexion
+
 		#print ("PUERTO DESCONECTADO")		# DEBUG
 
 		ports = list(serial.tools.list_ports.comports())	# lista de puertos disponibles
@@ -82,34 +84,34 @@ def conectar():
 					r = puerto.read()		   # lee el puerto
 					r = r.decode("utf-8")	   # cambia de byte a string
 
-					#print(r)					# DEBUG
+					print(r)					# DEBUG
 
 					if (r == 'P'):					# si recibe una 'P'
 						myLabel2.config(text='Conectado')		# conecto
 						myButton1.config(text='Desconectar')		# cambia msj de boton a desconectar
 
 						#print ("CONECTADO")								# DEBUG
-
+						c = 0
 						break									# no evalua mas puertos
 					else:
-						#print ("RECIBI OTRA COSA")				# DEBUG
+						print ("RECIBI OTRA COSA")				# DEBUG
 
 						puerto.close()							# cierro puerto
 						myLabel2.config(text='Desconectado')	# estado de conexion desconectado
-
 				except:				# si hay problemas abriendo el puerto
+					c = 1
+		if ( c == 1):
 
-					#print("Conexion fallo")
-					puerto.close()		# no se logró conectar
+			#print("Conexion fallo")
+			puerto.close()		# no se logró conectar
 
-					# abrir nueva ventana de dialogo: MENSAJE DE ERROR
-					error = Tk()				
-					error.title('errox04')
-					error.geometry("200x100")
+			# abrir nueva ventana de dialogo: MENSAJE DE ERROR
+			error = Tk()				
+			error.title('errox04')
+			error.geometry("200x100")
 
-					myLabel4 = Label(error,text="Error en conexión")
-					myLabel4.pack(padx=10,pady=30)
-
+			myLabel4 = Label(error,text="Error en conexión")
+			myLabel4.pack(padx=10,pady=30)
 	else:							# si el puerto esta conectado... desconecta
 
 		puerto.close()				# cierra puerto
