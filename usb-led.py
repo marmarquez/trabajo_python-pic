@@ -84,7 +84,7 @@ def conectar():
 					r = puerto.read()		   # lee el puerto
 					r = r.decode("utf-8")	   # cambia de byte a string
 
-					print(r)					# DEBUG
+					#print(r)					# DEBUG
 
 					if (r == 'P'):					# si recibe una 'P'
 						myLabel2.config(text='Conectado')		# conecto
@@ -94,7 +94,7 @@ def conectar():
 						c = 0
 						break									# no evalua mas puertos
 					else:
-						print ("RECIBI OTRA COSA")				# DEBUG
+						#print ("RECIBI OTRA COSA")				# DEBUG
 
 						puerto.close()							# cierro puerto
 						myLabel2.config(text='Desconectado')	# estado de conexion desconectado
